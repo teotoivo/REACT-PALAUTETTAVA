@@ -10,6 +10,20 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    minWidth: {
+      card: "14rem",
+    },
+    maxWidth: {
+      card: "20rem",
+      "1/2": "50%",
+      pImg: "600px",
+    },
+    maxHeight: {
+      card: "20rem",
+    },
+    screens: {
+      my: "870px",
+    },
   },
   plugins: [],
 };

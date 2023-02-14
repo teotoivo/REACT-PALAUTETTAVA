@@ -1,38 +1,68 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState, lazy } from "react";
+import { NamedAPIResourceList, PokemonClient } from "pokenode-ts";
+import PokemonCard from "../components/PokemonCard";
 
-async function onMount() {
-  const response = await fetch("https://pokeapi.co/api/v2/pokemon/?limit=10");
-  const json = await response.json();
-  console.log(json);
+async function onMount(page: number, setData: any, api: PokemonClient) {
+  const pageSize = 20;
+  const res = await api.listPokemons(page * pageSize - pageSize, pageSize);
+  console.log(res);
+  setData(res);
 }
 
 export default function Pokemons() {
+  const api = new PokemonClient();
   const prevNextstyle = "bg-slate-500 rounded-md p-0.5 ";
   const [page, setPage] = useState(1);
+  const [data, setData] = useState<NamedAPIResourceList | null>(null);
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    onMount();
+    (async () => {
+      const pageSize = 20;
+      const res = await api.listPokemons(page * pageSize - pageSize, pageSize);
+      console.log(res);
+      setData(res);
+      setLoaded(true);
+    })();
   }, [page]);
+
+  if (!loaded) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div></div>
+    <div className="m-4">
+      <div className="flex flex-wrap gap-1">
+        {data?.results.map((i) => {
+          return <PokemonCard key={i.name} name={i.name} />;
+        })}
+      </div>
       <div>
         <button
           onClick={() => {
-            setPage(page - 1);
+            if (page > 1) {
+              setPage(page - 1);
+            }
           }}
           className={
             prevNextstyle +
             (() => {
               if (page === 1) {
-                return "";
+                return "bg-slate-400";
               }
             })()
           }
         >
           previous
         </button>
-        <button className={prevNextstyle}>next</button>
+        <button
+          onClick={() => {
+            setPage(page + 1);
+          }}
+          className={prevNextstyle}
+        >
+          next
+        </button>
       </div>
-    </Suspense>
+    </div>
   );
 }
