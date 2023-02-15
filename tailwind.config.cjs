@@ -17,6 +17,7 @@ module.exports = {
       card: "20rem",
       "1/2": "50%",
       pImg: "600px",
+      "8/10": "80%",
     },
     maxHeight: {
       card: "20rem",

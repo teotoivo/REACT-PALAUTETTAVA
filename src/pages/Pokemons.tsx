@@ -5,7 +5,6 @@ import PokemonCard from "../components/PokemonCard";
 async function onMount(page: number, setData: any, api: PokemonClient) {
   const pageSize = 20;
   const res = await api.listPokemons(page * pageSize - pageSize, pageSize);
-  console.log(res);
   setData(res);
 }
 
@@ -15,11 +14,13 @@ export default function Pokemons() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState<NamedAPIResourceList | null>(null);
   const [loaded, setLoaded] = useState(false);
+
+  const [data2, setData2] = useState<NamedAPIResourceList | null>(null);
+
   useEffect(() => {
     (async () => {
       const pageSize = 20;
       const res = await api.listPokemons(page * pageSize - pageSize, pageSize);
-      console.log(res);
       setData(res);
       setLoaded(true);
     })();

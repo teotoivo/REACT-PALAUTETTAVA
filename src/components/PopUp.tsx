@@ -19,24 +19,30 @@ export default function PopUp({
       setA(res);
     })();
   }, [ability]);
-  const styles =
-    "bg-slate-400 absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 p-8 rounded-md";
   return (
-    <div className={popUpHidden ? "hidden" : styles}>
-      <div
-        className="absolute top-0 right-0 text-2xl hover:cursor-pointer"
-        onClick={() => {
-          setPopUpHidden(true);
-        }}
-      >
-        &#10006;
+    <div
+      className={
+        popUpHidden
+          ? "hidden"
+          : " w-full h-screen flex justify-center items-center fixed top-1/2 -translate-y-1/2"
+      }
+    >
+      <div className="bg-slate-400 absolute p-8 rounded-md max-w-8/10">
+        <div
+          className="h- absolute top-0 right-0 text-2xl hover:cursor-pointer"
+          onClick={() => {
+            setPopUpHidden(true);
+          }}
+        >
+          &#10006;
+        </div>
+        <h1>{ability?.ability.name}: </h1>
+        <p>
+          {a?.effect_entries.map((x) => {
+            if (x.language.name === "en") return x.effect;
+          })}
+        </p>
       </div>
-      <h1>{ability?.ability.name}: </h1>
-      <p>
-        {a?.effect_entries.map((x) => {
-          if (x.language.name === "en") return x.effect;
-        })}
-      </p>
     </div>
   );
 }

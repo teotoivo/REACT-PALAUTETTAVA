@@ -8,7 +8,7 @@ export default function NavBar() {
       <nav className="flex w-full">
         <ul className="flex items-center w-full gap-4 px-4">
           <li>
-            <img className="h-9 w-9" src="./pokeball.svg" alt="pokeball" />
+            <img className="h-9 w-9" src="/pokeball.svg" alt="pokeball" />
           </li>
           <li className={itemStyle}>
             <Link to="/pokemons">pokemons</Link>
