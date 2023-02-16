@@ -25,6 +25,10 @@ module.exports = {
     screens: {
       my: "870px",
     },
+    translate: {
+      test: "15%",
+      0: "0",
+    },
   },
   plugins: [],
 };

@@ -24,7 +24,7 @@ export default function PopUp({
       className={
         popUpHidden
           ? "hidden"
-          : " w-full h-screen flex justify-center items-center fixed top-1/2 -translate-y-1/2"
+          : " w-full h-full flex justify-center items-center fixed top-0"
       }
     >
       <div className="bg-slate-400 absolute p-8 rounded-md max-w-8/10">

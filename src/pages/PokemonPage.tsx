@@ -102,15 +102,15 @@ export default function PokemonPage() {
   }
 
   return (
-    <div className="w-full h-full items-center justify-center flex p-24 max-[700px]:p-4">
-      <div className="w-full bg-slate-600 rounded-md p-2 flex flex-col">
+    <div className="w-4/5 h-full items-center justify-center flex p-24 ml-auto mr-auto max-[700px]:p-4 text-slate-300 max-[700px]:w-full max-[700px]:text-sm">
+      <div className="w-full bg-slate-600 rounded-md p-8 flex flex-col gap-8">
         <div className="w-full flex justify-center items-center">
-          <h1 className="text-3xl">
+          <h1 className="text-4xl text-black font-medium">
             {data?.name} #{data?.id}
           </h1>
           <p></p>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-16">
           <div className="flex flex-row max-my:flex-col">
             <div className="w-1/2 flex items-center justify-center max-my:w-full flex-col">
               <img
@@ -121,14 +121,14 @@ export default function PokemonPage() {
             </div>
 
             <div className="w-1/2 items-center flex flex-col max-my:w-full">
-              <p className="w-fit text-xl max-w-8/10">
-                {species?.flavor_text_entries
-                  .filter((x) => {
-                    return x.language.name === "en";
-                  })[0]
-                  .flavor_text.replace(/(\r\n|\n|\r)/gm, " ")}
-              </p>
-              <div className="flex bg-slate-700 w-4/5 gap-6 rounded-md p-6 max-[400px]:flex-col flex-wrap">
+              <div className="flex bg-slate-700 w-4/5 gap-6 rounded-md p-6 max-[400px]:flex-col flex-wrap text-slate-300">
+                <p className="w-fit text-xl max-w-8/10">
+                  {species?.flavor_text_entries
+                    .filter((x) => {
+                      return x.language.name === "en";
+                    })[0]
+                    .flavor_text.replace(/(\r\n|\n|\r)/gm, " ")}
+                </p>
                 <div>
                   <p className="flex text-2xl">
                     Height: {Number(data?.height) / 10}m
@@ -172,7 +172,7 @@ export default function PokemonPage() {
                             key={x.type.name}
                             className="flex flex-row rounded-lg p-1 px-2 bg-slate-800 text-white"
                           >
-                            <p className="text-2xl">{x.type.name}</p>
+                            <p className="text-2xl shrink">{x.type.name}</p>
                           </div>
                         );
                       })}
@@ -180,7 +180,7 @@ export default function PokemonPage() {
                   </div>
                   <div>
                     <p className="dlex text-2xl">Weaknesses:&nbsp;</p>
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 flex-wrap">
                       {data?.types.map((x) => {
                         return (
                           <div
@@ -197,15 +197,20 @@ export default function PokemonPage() {
               </div>
             </div>
           </div>
-          <div className="w-full flex items-center justify-around flex-wrap">
+          <div className="w-full flex items-center justify-center gap-10 flex-wrap">
             {data?.stats.map((x) => {
               return (
                 <div className="flex flex-col items-center" key={x.stat.name}>
-                  <p className="text-2xl break-words">{x.stat.name}</p>
+                  <p className="text-2xl break-words whitespace-pre-line h-16">
+                    {(() => {
+                      //replace with linebrake
+                      return x.stat.name.replace(/-/g, "\n");
+                    })()}
+                  </p>
                   <div className="flex flex-col items-center h-64">
-                    <div className="border-black border-2 h-full w-4/5 flex">
+                    <div className="border-black border-2 h-full w-6 flex">
                       <div
-                        className="bg-red-500 w-full mt-auto"
+                        className="bg-red-500 w-6 mt-auto"
                         style={{
                           height: `${(x.base_stat / highestHp) * 100}%`,
                         }}
@@ -219,15 +224,15 @@ export default function PokemonPage() {
             })}
           </div>
           <div className="w-full flex">
-            <div className="flex w-full justify-around items-center">
+            <div className="flex w-full justify-around items-center max-[900px]:flex-col">
               {(() => {
                 function content() {
                   return chain?.map((x) => {
                     return (
-                      <>
+                      <React.Fragment key={x.species.name}>
                         <Link
                           to={"/pokemon/" + x.species.name}
-                          className="w-1/6"
+                          className="w-1/6 max-[900px]:w-1/2"
                           key={x.species.name}
                         >
                           <div
@@ -245,7 +250,7 @@ export default function PokemonPage() {
                               alt="pokemon picture"
                             />
                           </div>
-                          <div className="relative flex bg-slate-700 bg-opacity-80 w-min left-1/2 -translate-x-1/2 p-2 rounded-2xl px-4 text-white font-semibold">
+                          <div className="relative flex bg-slate-700 bg-opacity-80 w-min  p-2 rounded-2xl px-4 text-white font-semibold max-[900px]:translate-x-0 max-[900px]:left-0 max-[900px]:static ml-auto mr-auto">
                             {x.species.name}
                           </div>
                         </Link>
@@ -255,12 +260,14 @@ export default function PokemonPage() {
                               return <div className=""></div>;
                             } else {
                               return (
-                                <div className="w-1/6 text-9xl">&#8594;</div>
+                                <div className="w-full text-9xl -translate-y-1/4 max-[900px]:rotate-90 max-[900px]:-translate-y-0 max-[900px]:translate-x-test">
+                                  &#8594;
+                                </div>
                               );
                             }
                           })()}
                         </div>
-                      </>
+                      </React.Fragment>
                     );
                   });
                 }
